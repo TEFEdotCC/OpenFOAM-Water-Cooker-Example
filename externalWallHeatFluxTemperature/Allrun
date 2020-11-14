@@ -1,0 +1,20 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# pre-processing
+runApplication ./Allrun.pre
+
+# decompose
+runApplication decomposePar -copyZero
+nProcs=$(getNumberOfProcessors system/decomposeParDict)
+
+# Run
+mpirun -n $nProcs --use-hwthread-cpus  setFields -parallel > "log.setFields"
+mpirun -n $nProcs --use-hwthread-cpus $(getApplication) -parallel > "log.$(getApplication)"
+
+# Reconstruct
+runApplication reconstructPar
+
+#------------------------------------------------------------------------------

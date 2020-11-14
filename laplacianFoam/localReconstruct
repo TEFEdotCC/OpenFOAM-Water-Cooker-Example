@@ -1,0 +1,4 @@
+#!/bin/bash -xe
+
+./removeObsoleteFolders.sh
+reconstructPar -case fluid -newTimes > "log.fluid.reconstructPar"

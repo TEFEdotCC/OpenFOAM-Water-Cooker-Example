@@ -1,0 +1,19 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# clean up
+./Allclean
+
+# mesh
+ideasUnvToFoam ./CAD/Mesh_Fluid.unv
+
+# Restore initial fields
+restore0Dir
+
+#
+changeDictionary -subDict dictionaryReplacement
+
+
+#------------------------------------------------------------------------------
